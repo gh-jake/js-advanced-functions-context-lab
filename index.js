@@ -1,4 +1,57 @@
 /* Your Code Here */
+let createEmployeeRecord = function (employeeInfo) {
+    return {
+        firstName: employeeInfo[0] ,
+        familyName: employeeInfo[1] ,
+        title: employeeInfo[2] ,
+        payPerHour: employeeInfo[3] ,
+        timeInEvents: [] ,
+        timeOutEvents: []
+    };
+}
+
+let createEmployeeRecords = function (employees) {
+    return employees.map(employee => createEmployeeRecord(employee));
+}
+
+let createTimeInEvent = function (dateStamp) {
+    let timeInEvent = {
+        type: "TimeIn",
+        date: dateStamp.split(" ")[0] ,
+        hour: parseInt(dateStamp.split(" ")[1])
+    }
+    this.timeInEvents.push(timeInEvent);
+    return this;
+}
+
+let createTimeOutEvent = function (dateStamp) {
+    let timeOutEvent = {
+        type: "TimeOut",
+        date: dateStamp.split(" ")[0] ,
+        hour: parseInt(dateStamp.split(" ")[1])
+    }
+    this.timeOutEvents.push(timeOutEvent);
+    return this;
+}
+
+let hoursWorkedOnDate = function (dateStamp) {
+    let timeOutHour = this.timeOutEvents.find(e => e.date === dateStamp).hour;
+    let timeInHour = this.timeInEvents.find(e => e.date === dateStamp).hour;
+    return (timeOutHour - timeInHour) / 100;
+}
+
+let wagesEarnedOnDate = function (dateStamp) {
+    return this.payPerHour * hoursWorkedOnDate.call(this, dateStamp);
+}
+
+let findEmployeeByFirstName = function (srcArray, firstName) {
+    return srcArray.find(array => array.firstName === firstName);
+}
+
+let calculatePayroll = function (employees) {
+    let pay = employees.map(employee => allWagesFor.bind(employee)());
+    return pay.reduce((added, start) => added + start);
+}
 
 /*
  We're giving you this function. Take a look at it, you might see some usage
